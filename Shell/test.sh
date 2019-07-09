@@ -27,7 +27,19 @@ source ./common/string.sh
 #     echo "换行"
 # fi
 
-isEmpty "\n"
-if [ $? == 0 ]; then
-    echo "等于0"
-fi
+# isEmpty "\n"
+# if [ $? == 0 ]; then
+#     echo "等于0"
+# fi
+
+touch goland.desktop
+
+echo '[Desktop Entry]
+Name=Goland IDEA
+Exec='${GolandChildDir}'/bin/goland.sh
+Icon='${GolandChildDir}'/bin/goland.png
+Terminal=false
+Type=Application
+Encoding=UTF-8
+Categories=Development
+StartupNotify=true' > goland.desktop
