@@ -9,37 +9,27 @@ source ./common/string.sh
 # Create date : 2019-07-06 15:23
 # Remarks     : Installing Goland IDE
 
- # configuration definition
+# configuration definition
 DloadGloandUrl=https://download.jetbrains.8686c.com/go/goland-2019.1.2.tar.gz
 DloadSaveName=${DloadGloandUrl##*/}
 GolandChildDir=/opt/GoLand-2019.1.2
 
- readonly DloadGloandUrl
- readonly DloadSaveName
+readonly DloadGloandUrl
+readonly DloadSaveName
 
- if [ ! -e ~/Downloads ]; then
+if [ ! -e ~/Downloads ]; then
      mkdir ~/Downloads
- fi
+fi
 
 cd ~/Downloads
 
-# # Download Goland
- curl -L $DloadGloandUrl -o ${DloadSaveName}
+# Download Goland
+curl -L $DloadGloandUrl -o ${DloadSaveName}
 
 # Decompression Goland
 sudo tar -xzvf ${DloadSaveName} -C /opt/
 
 touch goland.desktop
-
-val='[Desktop Entry]
-Name=Goland IDEA
-Exec='${GolandChildDir}'/bin/goland.sh
-Icon='${GolandChildDir}'/bin/goland.png
-Terminal=false
-Type=Application
-Encoding=UTF-8
-Categories=Development
-StartupNotify=true'
 
 echo '[Desktop Entry]
 Name=Goland IDEA
