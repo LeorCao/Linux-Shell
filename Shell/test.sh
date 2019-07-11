@@ -32,14 +32,20 @@ source ./common/string.sh
 #     echo "等于0"
 # fi
 
-touch goland.desktop
+# 添加快捷方式
+# touch goland.desktop
 
-echo '[Desktop Entry]
-Name=Goland IDEA
-Exec='${GolandChildDir}'/bin/goland.sh
-Icon='${GolandChildDir}'/bin/goland.png
-Terminal=false
-Type=Application
-Encoding=UTF-8
-Categories=Development
-StartupNotify=true' > goland.desktop
+# echo '[Desktop Entry]
+# Name=Goland IDEA
+# Exec='${GolandChildDir}'/bin/goland.sh
+# Icon='${GolandChildDir}'/bin/goland.png
+# Terminal=false
+# Type=Application
+# Encoding=UTF-8
+# Categories=Development
+# StartupNotify=true' > goland.desktop
+
+# saveName=$(downloadFile "https://download.jetbrains.8686c.com/go/goland-2019.1.2.tar.gz")
+# echo "call result : $saveName"
+
+creationDesktop "goland" "Goland IDEA" "/opt/GoLand-2019.1.2/bin/goland.sh" "/opt/GoLand-2019.1.2/bin/goland.png"

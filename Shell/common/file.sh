@@ -1,10 +1,10 @@
 # !bin/bash
 
-source ./string.sh
+source ./common/string.sh
 
 # 获取当前文件夹下制定前缀的子文件（目录）名称
 function getChildDir() {
-    echo `ls | grep "${1}*" | xargs`
+    echo $(ls | grep "${1}*" | xargs)
 }
 
 # 下载文件，返回文件名称, 也可以传入存储文件名称
@@ -16,12 +16,35 @@ function downloadFile() {
     fi
     readonly DloadGloandUrl
     readonly DloadSaveName
-    isEmpty "$DloadGloandUrl"
-    if [ $? == 0 ]; then
-        echo "download url is empty"
-    fi
     curl -L ${DloadGloandUrl} -o ${DloadSaveName}
     echo $DloadSaveName
-    unset DloadGloandUrl
-    unset DloadSaveName
+}
+
+# 创建桌面快捷方式
+# ${1} : 快捷方式文件名
+# ${2} : 快捷方式名称
+# ${3} : 快捷方式对应的启动文件
+# ${4} : 快捷方式图标对应的图片
+function creationDesktop() {
+    desktop="${1}.desktop"
+    deskName=${2}
+    optPath=${3}
+    pngPath=${4}
+    touch ${desktop}
+    echo '[Desktop Entry]
+Name='${deskName}'
+Exec='${optPath}'
+Icon='${pngPath}'
+Terminal=false
+Type=Application
+Encoding=UTF-8
+Categories=Development' > ${desktop}
+
+    sudo chmod 755 "${optPath}"
+
+    sudo mv ${desktop} /usr/share/applications/
+
+    sudo chmod 644 "/usr/share/applications/${desktop}"
+    
+    echo "创建快捷方式成功"
 }

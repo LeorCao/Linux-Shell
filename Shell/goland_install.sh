@@ -15,37 +15,24 @@ DloadSaveName=${DloadGloandUrl##*/}
 GolandChildDir=/opt/GoLand-2019.1.2
 
 readonly DloadGloandUrl
-readonly DloadSaveName
+readonly GolandChildDir
 
 if [ ! -e ~/Downloads ]; then
-     mkdir ~/Downloads
+    mkdir ~/Downloads
 fi
 
 cd ~/Downloads
 
 # Download Goland
-curl -L $DloadGloandUrl -o ${DloadSaveName}
+DloadSaveName=$(downloadFile "${DloadGloandUrl}")
 
 # Decompression Goland
 sudo tar -xzvf ${DloadSaveName} -C /opt/
 
-touch goland.desktop
+# Creation desktop
+creationDesktop "goland" "Goland IDEA" "${GolandChildDir}/bin/goland.sh" "${GolandChildDir}/bin/goland.png"
 
-echo '[Desktop Entry]
-Name=Goland IDEA
-Exec='${GolandChildDir}'/bin/goland.sh
-Icon='${GolandChildDir}'/bin/goland.png
-Terminal=false
-Type=Application
-Encoding=UTF-8
-Categories=Development' > goland.desktop
-
-sudo chmod 755 "$GolandChildDir/bin/goland.sh"
-
-sudo mv goland.desktop /usr/share/applications/
-
-sudo chmod 644 /usr/share/applications/goland.desktop
-
+# Running exec shell
 $GolandChildDir/bin/goland.sh
 
 exit

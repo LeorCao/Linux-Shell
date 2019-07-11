@@ -2,42 +2,37 @@
 
 # import
 source ./common/file.sh
-source ./common/decomp.sh
-source ./common/string.sh
 
 # Author      : Leor Cao
 # Create date : 2019-07-06 15:23
-# Remarks     : Installing WebStrom IDE
+# Remarks     : Installing WebStorm IDE
 
 # configuration definition
 DloadUrl=https://download-cf.jetbrains.com/webstorm/WebStorm-2019.1.2.tar.gz
-DloadSaveName=${DloadUrl##*/}
-GolandChildDir=/opt/WebStorm-191.7141.49
-DeskTopName=webstrom.desktop
+DloadSaveName=
+WebStormChildDir=/opt/WebStorm-191.7141.49
 
 readonly DloadUrl
-readonly DloadSaveName
-readonly GolandChildDir
+readonly WebStormChildDir
 
 if [ ! -e ~/Downloads ]; then
-     mkdir ~/Downloads
- fi
+    mkdir ~/Downloads
+fi
 
 cd ~/Downloads
 
-# Download Webstrom
-curl -L ${DloadUrl} -o ${DloadSaveName}
+# Download WebStorm
+DloadSaveName=$(downloadFile "${DloadUrl}")
 
-# Decompression Goland
+# Decompression WebStorm
 sudo tar -xzvf ${DloadSaveName} -C /opt/
 
-touch $DeskTopName
+# Out put exec shell path
+echo "$WebStormChildDir/bin/webstorm.sh"
 
-echo '[Desktop Entry]
-Name=Goland IDEA
-Exec='${GolandChildDir}'/bin/goland.sh
-Icon='${GolandChildDir}'/bin/goland.png
-Terminal=false
-Type=Application
-Encoding=UTF-8
-Categories=Development' > $DeskTopName
+# running exec shell
+"$WebStormChildDir/bin/webstorm.sh"
+
+unset DloadSaveName
+
+exit
