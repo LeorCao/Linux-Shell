@@ -46,5 +46,12 @@ Categories=Development' > ${desktop}
 
     sudo chmod 644 "/usr/share/applications/${desktop}"
     
-    echo "创建快捷方式成功"
+    echo "desktop creation success"
+}
+
+# 判断文件是否存在
+function isProcedureExist () {
+    proName=$(pacman -Q ${1})
+    isEmpty "${proName}"
+    echo $?
 }
