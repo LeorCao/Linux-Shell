@@ -11,7 +11,7 @@ mkdir ~/Downloads
 
 cd ~/Downloads
 
-# curl -L https://update.code.visualstudio.com/latest/linux-x64/stable -o ${vsName}
+curl -L https://update.code.visualstudio.com/latest/linux-x64/stable -o ${vsName}
 
 if [ ! -e /opt/ ]; then
     sudo mkdir /opt/
@@ -19,7 +19,7 @@ fi
 
 sudo tar -xzvf ${vsName} -C /opt/
 
-# sudo rm -rf ${vsName}
+sudo rm -rf ${vsName}
 
 cd /opt/
 
