@@ -14,9 +14,6 @@ DloadGloandUrl=https://download.jetbrains.8686c.com/go/goland-2019.1.2.tar.gz
 DloadSaveName=${DloadGloandUrl##*/}
 GolandChildDir=/opt/GoLand-2019.1.2
 
-readonly DloadGloandUrl
-readonly GolandChildDir
-
 if [ ! -e ~/Downloads ]; then
     mkdir ~/Downloads
 fi
