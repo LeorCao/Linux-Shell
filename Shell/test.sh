@@ -60,3 +60,25 @@ source ./common/string.sh
 
 # 测试 检查程序是否安装
 # echo $(isProcedureExist "yaourt")
+
+# 测试sed 修改文件
+# test=test-sed
+
+# path=$(sed -n "/^PATH=/p" ${test})
+
+# # sed -n '/^PATH=/p' ${test} | sed -n '/GOROOT/p'
+
+# match=$(echo ${path} | sed -n "/$GOROOT\/bin/p")
+
+# echo ${match}
+
+# isEmpty "${match}"
+# if [ $? == 0 ]; then
+#     echo "等于0"
+# fi
+
+# sed -e 's%^.*export GOROOT.*$%export GOROOT=/home/leor/DEV/goroot%g' -e 's%^.*export GOPATH.*$%export GOPATH=/home/leor/DEV/gopath%g' test-sed
+
+# 测试修改系统PATH
+editSystemPATH "^export GOROOT=.*$" "export GOROOT=/home/leor/Developments/GoRoot" "\$GOROOT/bin"
+editSystemPATH "^export GOPATH=.*$" "export GOPATH=/home/leor/Developments/GoPath" "\$GOPATH/bin"
