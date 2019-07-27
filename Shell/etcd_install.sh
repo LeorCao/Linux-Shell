@@ -1,5 +1,10 @@
 # !bin/bash
 
+# Author      : Leor Cao
+# Create date : 2019-07-28 00:15
+# Remarks     : 安装 ETCD
+# Extend for  : ETCD 官方提供的安装脚本 https://github.com/etcd-io/etcd/releases
+
 # 下载版本，如果要下载其他版本的 ETCD 修改版本号即可
 VERSION=v3.3.13
 INSTALL_DIR=etcd-${VERSION}-linux-amd64
