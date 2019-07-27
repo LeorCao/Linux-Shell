@@ -29,3 +29,6 @@ sudo curl -L ${GOOGLE_DLOAD_URL}/${VERSION}/${INSTALL_DIR}.tar.gz | \
 # 检查 ETCD 版本
 ${INSTALL_PATH}/etcd --version
 ETCDCTL_API=3 ${INSTALL_PATH}/etcdctl version
+
+# 修改文件执行权限
+chmod 755 ${INSTALL_DIR}/*
