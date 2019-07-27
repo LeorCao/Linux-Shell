@@ -1,12 +1,15 @@
 # !bin/bash
 
+# Author      : Leor Cao
+# Create date : 2019-07-25 15:23
+# Remarks     : 安装 Golang
+
 source ./common/string.sh
 source ./common/file.sh
 
 DloadUrl=https://studygolang.com/dl/golang/go1.12.7.linux-amd64.tar.gz
-
-GoRootDir="${HOME}/Developments/GoRoot"
-GoPathDir="${HOME}/Developments/GoPath"
+GoRootDir="${HOME}/Developments/Golang/GoRoot"
+GoPathDir="${HOME}/Developments/Golang/GoPath"
 
 # 创建 GOROOT 文件夹
 mkdir -p ${GoRootDir}
