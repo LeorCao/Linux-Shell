@@ -5,7 +5,6 @@ source ./common/file.sh
 
 desktopDir=/usr/share/applications/
 vsName=vs-code.tar.gz
-readonly desktopDir
 
 mkdir ~/Downloads
 
