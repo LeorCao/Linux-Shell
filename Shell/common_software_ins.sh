@@ -52,7 +52,7 @@ yay -S the_silver_searcher
 yay -S filezilla
 
 # notepadqq
-yay -S 
+yay -S notepadqq
 
 # teamviewer
 yay -S teamviewer
@@ -60,7 +60,26 @@ yay -S teamviewer
 # latte dock
 yay -S latte-dock
 
-# 安装 VirtualBox
+# VirtualBox
 yay -S virtualbox
 yay -S virtualbox-ext-oracle
 sudo modprobe vboxdrv
+
+# wine 微信
+yay -S deepin-wine-wechat
+
+# wine TIM
+yay -S deepin-wine-tim
+
+# wine 迅雷
+yay -S deepin-wine-thunderspeed
+
+# 邮箱管理器
+yay -S mailspring
+
+# 全局菜单配置
+yay -S appmenu-gtk-module libdbusmenu-glib libdbusmenu-gtk2 libdbusmenu-gtk3
+cd ${HOME}/Download
+curl -L https://aur.archlinux.org/cgit/aur.git/snapshot/aur-b09247e72932a4105e4c561c85cab08a4e4381c3.tar.gz | \
+    tar xzf - -C aur-b09247e72932a4105e4c561c85cab08a4e4381c3 && \
+    makepkg
