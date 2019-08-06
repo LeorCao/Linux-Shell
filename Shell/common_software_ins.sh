@@ -37,7 +37,7 @@ yay -S netease-cloud-music
 yay -S git
 
 # GitKraken git 客户端
-yay -S GitKraken
+yay -S gitkraken
 
 # Foxit PDF
 yay -S foxit
@@ -78,7 +78,7 @@ yay -S deepin-wine-thunderspeed
 yay -S mailspring
 
 # 全局菜单配置
-yay -S appmenu-gtk-module libdbusmenu-glib libdbusmenu-gtk2 libdbusmenu-gtk3
+sudo pacman -S appmenu-gtk-module gmenu-dbusmenu-proxy libdbusmenu-glib libdbusmenu-gtk2 libdbusmenu-gtk3 extra-cmake-modules kdesignerplugin
 cd ${HOME}/Download
 curl -L https://aur.archlinux.org/cgit/aur.git/snapshot/aur-b09247e72932a4105e4c561c85cab08a4e4381c3.tar.gz | \
     tar xzf - -C aur-b09247e72932a4105e4c561c85cab08a4e4381c3 && \
