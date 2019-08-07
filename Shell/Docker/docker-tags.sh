@@ -2,7 +2,7 @@
 
 # Author      : Leor Cao
 # Create date : 2019-07-06 15:23
-# Remarks     : Installing Goland IDE
+# Remarks     : 查看 docker 镜像所有的 tags
 
 API="https://registry.hub.docker.com/v1/repositories"
 DEFAULT_NAME="busybox"
