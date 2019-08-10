@@ -31,4 +31,8 @@ ${INSTALL_PATH}/etcd --version
 ETCDCTL_API=3 ${INSTALL_PATH}/etcdctl version
 
 # 修改文件执行权限
-chmod 755 ${INSTALL_DIR}/*
+chmod 755 ${INSTALL_PATH}/*
+
+# 添加 etcd etcdctl 软连接
+sudo ln -s ${INSTALL_PATH}/etcd /usr/bin
+sudo ln -s ${INSTALL_PATH}/etcdctl /usr/bin

@@ -38,7 +38,7 @@ Name=VSCode
 Type=Application
 Exec=/opt/VSCode-linux-x64/bin/code
 Icon=/opt/VSCode-linux-x64/resources/app/resources/linux/code.png
-Categories=Development' > vscode.desktop
+Categories=Development' >vscode.desktop
 
 sudo mv vscode.desktop ${desktopDir}
 
