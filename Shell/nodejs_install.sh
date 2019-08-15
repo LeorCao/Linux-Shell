@@ -1,5 +1,9 @@
 # !bin/bash
 
+# Author      : Leor Cao
+# Create date : 2019-08-02 15:23
+# Remarks     : 安装 NodeJS
+
 # 需要安装的 node 版本
 NODE_VER=v10.16.2
 

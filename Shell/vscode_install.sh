@@ -1,5 +1,9 @@
 # !bin/bash
 
+# Author      : Leor Cao
+# Create date : 2019-07-25 15:23
+# Remarks     : 安装 vscode
+
 # import
 source ./common/file.sh
 
