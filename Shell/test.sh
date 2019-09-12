@@ -1,4 +1,4 @@
-# !bin/bash
+#!/bin/bash
 
 # 引入外部文件
 source ./common/file.sh

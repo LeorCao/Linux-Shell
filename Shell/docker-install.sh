@@ -1,4 +1,4 @@
-# !bin/bash
+#!/bin/bash
 
 sudo pacman -S docker && \
 sudo systemctl start docker && \

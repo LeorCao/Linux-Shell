@@ -1,4 +1,4 @@
-# !bin/bash
+#!/bin/bash
 
 # Author      : Leor Cao
 # Create date : 2019-08-02 15:23
