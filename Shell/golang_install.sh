@@ -15,9 +15,9 @@ FILE_NAME=go${GOLANG_VER}.linux-amd64
 DloadUrl=${BASE_URL}/${FILE_NAME}.tar.gz
 
 # goroot 路径
-GoRootDir="${HOME}/Developments/Golang/GoRoot"
+GoRootDir="${HOME}/Dev/Golang/GoRoot"
 # gopath 路径
-GoPathDir="${HOME}/Developments/Golang/GoPath"
+GoPathDir="${HOME}/Dev/Golang/GoPath"
 
 # 清除旧的版本
 rm -rf ${GoRootDir}

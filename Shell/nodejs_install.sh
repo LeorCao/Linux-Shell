@@ -4,6 +4,10 @@
 # Create date : 2019-08-02 15:23
 # Remarks     : 安装 NodeJS
 
+source ./common/common.sh
+
+printPrefaceMsg
+
 # 需要安装的 node 版本
 NODE_VER=v12.13.0
 
@@ -25,10 +29,7 @@ echo --------------------------------
 # 下载 nodejs
 curl -L ${BASE_URL}/${NODE_VER}/${FILE_NAME}.tar.xz | tar -xJf - -C ${SAVE_PATH}
 
-if [ $? -ne 0 ]; then
-    echo "running error : Download failed, exit!"
-    exit
-fi
+checkError $? "Download failed!"
 
 # 添加软链接
 sudo ln -s ${SAVE_PATH}${FILE_NAME}/bin/node /usr/bin/node
@@ -37,10 +38,7 @@ sudo ln -s ${SAVE_PATH}${FILE_NAME}/bin/npm /usr/bin/npm
 # 安装 cnpm
 npm install -g cnpm --registry=https://registry.npm.taobao.org
 
-if [ $? -ne 0 ]; then
-    echo "running error : Configration cnpm failed, exit!"
-    exit
-fi
+checkError $? "Configration cnpm failed!"
 
 # cnpm 软链接到 /usr/bin
 sudo ln -s ${SAVE_PATH}${FILE_NAME}/bin/cnpm /usr/bin/
@@ -51,9 +49,6 @@ npm -v
 cnpm -v
 
 # install success
-echo --------------------------------
-echo install success !!
-echo "made in Leor, Welcome to https://leor.com.cn"
-echo --------------------------------
+printEndMsg
 
 exit
