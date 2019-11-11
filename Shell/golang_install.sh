@@ -3,12 +3,15 @@
 # Author      : Leor Cao
 # Create date : 2019-07-25 15:23
 # Remarks     : 安装 Golang
+# modify :
+# 2019-11-11 : 修改版本到 1.13.4
 
-source ./common/string.sh
-source ./common/file.sh
+source ./common/common.sh
+
+# https://studygolang.com/dl/golang/go1.13.4.linux-amd64.tar.gz
 
 # golang 版本
-GOLANG_VER=1.12.7
+GOLANG_VER=1.13.4
 
 BASE_URL=https://studygolang.com/dl/golang
 FILE_NAME=go${GOLANG_VER}.linux-amd64
