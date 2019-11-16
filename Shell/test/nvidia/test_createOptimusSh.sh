@@ -14,7 +14,7 @@ export OPTIMUS_SHELL_PATH=/usr/local/bin/
 # xrandr --setprovideroutputsource modesetting NVIDIA-0
 # xrandr --auto
 
-createFile "${OPTIMUS_SHELL_NAME}" "${OPTIMUS_SHELL_PATH}" '#!/bin/sh\n\nxrandr --setprovideroutputsource modesetting NVIDIA-0\nxrandr --auto'
+forceCreateAndWriteContToFile "${OPTIMUS_SHELL_PATH}${OPTIMUS_SHELL_NAME}" '#!/bin/sh\n\nxrandr --setprovideroutputsource modesetting NVIDIA-0\nxrandr --auto'
 
 sudo chmod a+rx ${OPTIMUS_SHELL_PATH}${OPTIMUS_SHELL_NAME}
 

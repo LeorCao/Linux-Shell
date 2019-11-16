@@ -22,7 +22,7 @@ sudo rm -f ${OPTIMUS_PATH}${OPTIMUS_OLD_REMOVE_FILE}
 sudo rm -f ${OPTIMUS_PATH}${OPTIMUS_FILE_NAME}
 
 # 创建 optimus.conf
-createFile "${OPTIMUS_FILE_NAME}" "${OPTIMUS_PATH}" 'Section "Module"\n\tLoad "modesetting"\nEndSection\n\nSection "Device"\n\tIdentifier "nvidia"\n\tDriver "nvidia"\n\tBusID "PCI:1:0:0"\n\tOption "DPI" "96 x 96"\n\tOption "AllowEmptyInitialConfiguration"\nEndSection'
+forceCreateAndWriteContToFile "${OPTIMUS_PATH}${OPTIMUS_FILE_NAME}" 'Section "Module"\n\tLoad "modesetting"\nEndSection\n\nSection "Device"\n\tIdentifier "nvidia"\n\tDriver "nvidia"\n\tBusID "PCI:1:0:0"\n\tOption "DPI" "96 x 96"\n\tOption "AllowEmptyInitialConfiguration"\nEndSection'
 
 unset OPTIMUS_PATH
 unset OPTIMUS_OLD_REMOVE_FILE
@@ -42,7 +42,7 @@ export NVIDIA_CONF_PATH=/etc/modprobe.d/
 # blacklist nvidiafb
 # blacklist rivafb
 
-createFile "${NVIDIA_CONF_NAME}" "${NVIDIA_CONF_PATH}" 'blacklist nouveau\nblacklist nvidiafb\nblacklist rivafb'
+forceCreateAndWriteContToFile "${NVIDIA_CONF_PATH}${NVIDIA_CONF_NAME}" 'blacklist nouveau\nblacklist nvidiafb\nblacklist rivafb'
 
 unset NVIDIA_CONF_NAME
 unset NVIDIA_CONF_PATH
@@ -58,7 +58,7 @@ export NVIDIA_DRM_FILE_PATH=/etc/modprobe.d/
 # Content :
 # options nvidia_drm modeset=1
 
-createFile "${NVIDIA_DRM_FILE_NAME}" "${NVIDIA_DRM_FILE_PATH}" 'options nvidia_drm modeset=1'
+forceCreateAndWriteContToFile "${NVIDIA_DRM_FILE_PATH}${NVIDIA_DRM_FILE_NAME}" 'options nvidia_drm modeset=1'
 
 unset NVIDIA_DRM_FILE_NAME
 unset NVIDIA_DRM_FILE_PATH
@@ -77,7 +77,7 @@ export OPTIMUS_SHELL_PATH=/usr/local/bin/
 # xrandr --setprovideroutputsource modesetting NVIDIA-0
 # xrandr --auto
 
-createFile "${OPTIMUS_SHELL_NAME}" "${OPTIMUS_SHELL_PATH}" '#!/bin/sh\n\nxrandr --setprovideroutputsource modesetting NVIDIA-0\nxrandr --auto'
+forceCreateAndWriteContToFile "${OPTIMUS_SHELL_PATH}${OPTIMUS_SHELL_NAME}" '#!/bin/sh\n\nxrandr --setprovideroutputsource modesetting NVIDIA-0\nxrandr --auto'
 
 sudo chmod a+rx ${OPTIMUS_SHELL_PATH}${OPTIMUS_SHELL_NAME}
 
@@ -104,7 +104,7 @@ unset LIGHTDM_FILE
 # /usr/local/share/optimus.desktop
 export DESKTOP_FILE_PATH=/usr/local/share/optimus.desktop
 
-createDesktopByCustomContent ${DESKTOP_FILE_PATH} '[Desktop Entry]\nType=Application\nName=Optimus\nExec=sh -c "xrandr --setprovideroutputsource modesetting NVIDIA-0; xrandr --auto"\nNoDisplay=true\nX-GNOME-Autostart-Phase=DisplayServer'
+forceCreateAndWriteContToFile ${DESKTOP_FILE_PATH} '[Desktop Entry]\nType=Application\nName=Optimus\nExec=sh -c "xrandr --setprovideroutputsource modesetting NVIDIA-0; xrandr --auto"\nNoDisplay=true\nX-GNOME-Autostart-Phase=DisplayServer'
 
 unset DESKTOP_FILE_PATH
 
@@ -122,7 +122,7 @@ sudo ln -s /usr/local/share/optimus.desktop /etc/xdg/autostart/optimus.desktop
 
 export XSETUP_FILE_PATH=/usr/share/sddm/scripts/Xsetup
 
-createFileByPath "${XSETUP_FILE_PATH}" "#!/bin/sh\n\nxrandr --setprovideroutputsource modesetting NVIDIA-0\nxrandr --auto"
+forceCreateAndWriteContToFile "${XSETUP_FILE_PATH}" "#!/bin/sh\n\nxrandr --setprovideroutputsource modesetting NVIDIA-0\nxrandr --auto"
 
 unset XSETUP_FILE_PATH
 

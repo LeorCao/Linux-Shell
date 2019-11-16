@@ -12,4 +12,4 @@ export NVIDIA_CONF_PATH=/etc/modprobe.d/
 # blacklist nvidiafb
 # blacklist rivafb
 
-createFile "${NVIDIA_CONF_NAME}" "${NVIDIA_CONF_PATH}" 'blacklist nouveau\nblacklist nvidiafb\nblacklist rivafb'
+forceCreateAndWriteContToFile "${NVIDIA_CONF_PATH}${NVIDIA_CONF_NAME}" 'blacklist nouveau\nblacklist nvidiafb\nblacklist rivafb'

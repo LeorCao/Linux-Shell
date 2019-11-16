@@ -5,44 +5,46 @@
 # ${2} : 错误时需要输出的错误原因
 function checkError() {
     if [ ${1} -ne 0 ]; then
-        printErrorMsg ${2}
+        printErrorEndMsg ${2}
     fi
 }
 
 # 打印安装前言
 function printPrefaceMsg() {
-    echo "-------------------------------"
-    echo "--> Power by : Leor, Welcome to https://leor.com.cn"
-    echo "--> Begin instaling~"
-    echo "-------------------------------"
+    infoLog "-------------------------------"
+    infoLog "--> Power by : Leor, Welcome to https://leor.com.cn"
+    infoLog "--> Begin instaling~"
+    infoLog "-------------------------------"
 }
 
 # 打印结束语
 function printEndMsg() {
-    echo "-------------------------------"
-    echo "--> Installed success!"
-    echo "--> Power by : Leor, Welcome to https://leor.com.cn"
-    echo "-------------------------------"
+    infoLog "-------------------------------"
+    infoLog "--> Installed success!"
+    infoLog "--> Power by : Leor, Welcome to https://leor.com.cn"
+    infoLog "-------------------------------"
     exit
 }
 
 # 打印错误安装失败
 # ${1} : 错误原因
-function printErrorMsg() {
-    echo "-------------------------------"
-    echo "--> Instaling failed!"
-    echo "--> Cause : ${1}"
-    echo "--> Power by : Leor, Welcome to https://leor.com.cn"
-    echo "-------------------------------"
+function printErrorEndMsg() {
+    errorLog "-------------------------------" $FALSE
+    errorLog "--> Instaling failed!" $FALSE
+    errorLog "--> Cause : ${1}" $FALSE
+    errorLog "--> Power by : Leor, Welcome to https://leor.com.cn" $FALSE
+    errorLog "-------------------------------" $FALSE
     exit
 }
 
-# 获取当前文件夹下制定前缀的子文件（目录）名称
-function getChildDir() {
+# 获取当前文件夹下指定前缀的子文件或子目录名称
+function getAssignPrefixChildDir() {
     echo $(ls | grep "${1}*" | xargs)
 }
 
 # 下载文件，返回文件名称, 也可以传入存储文件名称
+# ${1} : 下载地址
+# ${2} : 文件名称(可选)
 function downloadFile() {
     DloadGloandUrl=${1}
     DloadSaveName=${DloadGloandUrl##*/}
@@ -65,31 +67,18 @@ function creationDesktop() {
     deskName=${2}
     optPath=${3}
     pngPath=${4}
-    touch ${desktop}
-    echo '[Desktop Entry]
-Name='${deskName}'
-Exec='${optPath}'
-Icon='${pngPath}'
-Terminal=false
-Type=Application
-Encoding=UTF-8
-Categories=Development' >${desktop}
+    desktop="/usr/share/applications/${desktop}"
+
+    forceCreateAndWriteContToFile ${desktop} '[Desktop Entry]\nName='${deskName}'\nExec='${optPath}'\nIcon='${pngPath}'\nTerminal=false\nType=Application\nEncoding=UTF-8\nCategories=Development'\n
 
     sudo chmod 755 "${optPath}"
 
-    sudo mv ${desktop} /usr/share/applications/
-
-    sudo chmod 644 "/usr/share/applications/${desktop}"
+    sudo chmod 644 "${desktop}"
 
     echo "desktop creation success"
 }
 
-function createDesktopByCustomContent() {
-    sudo touch ${1}
-    sudo echo -e ${2} | sudo tee ${1}
-}
-
-# 判断文件是否存在
+# manjaro 判断 程序是否已安装
 function isProcedureExist() {
     proName=$(pacman -Q ${1})
     isEmpty "${proName}"
@@ -98,7 +87,7 @@ function isProcedureExist() {
 
 # 设置环境变量
 # ${1} 需要匹配内容是否存在
-# ${2} 替换或新增的内容
+# ${2} 需要写入的内容
 # ${3} 在PATH中添加的内容
 function editSystemPATH() {
     ProPath="${HOME}/.xprofile"
@@ -124,30 +113,29 @@ function editSystemPATH() {
     source ~/.xprofile
 }
 
-# 创建文件
-# ${1} 文件名称
-# ${2} 路径
-# ${3} 文件内容
-# e.g call : createFile "file_name" "file_path" "file_content"
-function createFile() {
-    touch ${1}
-    echo -e ${3} > ${1}
-    sudo mv ${1} ${2}
-}
-
 # 使用文件路径创建文件
 # ${1} : 文件路径
 # ${2} : 文件内容
-# e.g call : createFileByPath "file_path" "file_content"
-function createFileByPath() {
+# e.g call : forceCreateAndWriteContToFile "file_path" "file_content"
+function forceCreateAndWriteContToFile() {
     sudo touch ${1}
     echo -e ${2} | sudo tee -a ${1}
 }
 
-# 编辑写入内容到文件
+# 写入内容到文件
 # ${1} : 文件路径目标
 # ${2} : 写入内容
 function editWriteFile() {
+    echo -e ${2} | sudo tee -a ${1}
+}
+
+# 写入内容到文件，如果文件不存在则创建文件
+# ${1} : 文件路径目标
+# ${2} : 写入内容
+function contentWriteToFileOnCreate() {
+    if [ -f "${1}" ]; then
+        sudo touch "${1}"
+    fi
     echo -e ${2} | sudo tee -a ${1}
 }
 
@@ -174,4 +162,189 @@ function isEmpty() {
         return 0
     fi
     return 1
+}
+
+
+
+# 输出指定颜色的内容
+
+# 黑色
+# ${1} : 内容
+function echoBlackContent() {
+    echoContentWithAssginColor "${1}" $BLACK $DEFAULT_COLOR $DEFAULT_MODE
+}
+
+# 红色
+# ${1} : 内容
+function echoRedContent() {
+    echoContentWithAssginColor "${1}" $RED $DEFAULT_COLOR $DEFAULT_MODE
+}
+
+# 绿色
+# ${1} : 内容
+function echoGreen() {
+    echoContentWithAssginColor "${1}" $GREEN $DEFAULT_COLOR $DEFAULT_MODE
+}
+
+# 黄色
+# ${1} : 内容
+function echoYellow() {
+    echoContentWithAssginColor "${1}" $YELLOW $DEFAULT_COLOR $DEFAULT_MODE
+}
+
+# 青色
+# ${1} : 内容
+function echoCyanBlue() {
+    echoContentWithAssginColor "${1}" $CYAN_BLUE $DEFAULT_COLOR $DEFAULT_MODE
+}
+
+# 紫色
+# ${1} : 内容
+function echoPurple() {
+    echoContentWithAssginColor "${1}" $PURPLE $DEFAULT_COLOR $DEFAULT_MODE
+}
+
+# 蓝色
+# ${1} : 内容
+function echoBule() {
+    echoContentWithAssginColor "${1}" $BLUE $DEFAULT_COLOR $DEFAULT_MODE
+}
+
+# 白色
+# ${1} : 内容
+function echoWhite() {
+    echoContentWithAssginColor "${1}" $WHITE_BACK $DEFAULT_COLOR $DEFAULT_MODE
+}
+
+# 前景   背景 对应颜色
+# 30	40	 黑色
+# 31	41	 红色
+# 32	42	 绿色
+# 33	43	 黃色
+# 34	44	 蓝色
+# 35	45	 紫红色
+# 36	46	 青蓝色
+# 37	47	 白色
+# \033[显示方式;前景色;背景色m ${content} \033[0m
+
+# 颜色
+DEFAULT_COLOR=""
+BLACK="black"
+RED="red"
+GREEN="green"
+YELLOW="yellow"
+BLUE="blue"
+PURPLE="purple"
+CYAN_BLUE="cyanBlue"
+WHITE="white"
+
+# 显示方式
+DEFAULT_MODE="0"
+BOLD="1"
+UNDERLINE="4"
+FLICKER="5"
+WHITE_BACK="7"
+INVISIBLE="8"
+
+# 输出指定字体颜色、背景、是否闪烁、是否粗体的字体
+# ${1} : 内容
+# ${2} : 字体颜色
+# ${3} : 背景颜色
+# ${4} : 显示方式
+# CALL e.g : echoContentWithAssginColor "content" "front color" "backgured color" "shwo mode"
+function echoContentWithAssginColor() {
+    export ret="\\033["
+    if [ "${4}" != "${DEFAULT_MODE}" ]; then
+        ret=${ret}${4}";"
+    fi
+
+    case "$2" in
+        ${BLACK})
+            ret=$ret"30;"
+        ;;
+        ${RED})
+            ret=$ret"31;"
+        ;;
+        ${GREEN})
+            ret=$ret"32;"
+        ;;
+        ${YELLOW})
+            ret=$ret"33;"
+        ;;
+        ${BLUE})
+            ret=$ret"34;"
+        ;;
+        ${PURPLE})
+            ret=$ret"35;"
+        ;;
+        ${CYAN_BLUE})
+            ret=$ret"36;"
+        ;;
+        ${WHITE})
+            ret=$ret"37;"
+        ;;
+        *)
+        ;;
+    esac
+
+    case "$3" in
+        ${BLACK})
+            ret=$ret"40;"
+        ;;
+        ${RED})
+            ret=$ret"41;"
+        ;;
+        ${GREEN})
+            ret=$ret"42;"
+        ;;
+        ${YELLOW})
+            ret=$ret"43;"
+        ;;
+        ${BLUE})
+            ret=$ret"44;"
+        ;;
+        ${PURPLE})
+            ret=$ret"45;"
+        ;;
+        ${CYAN_BLUE})
+            ret=$ret"46;"
+        ;;
+        ${WHITE})
+            ret=$ret"47;"
+        ;;
+        *)
+        ;;
+    esac
+    ret="${ret%;*}m ${1} \\033[0m"
+    echo -e ${ret}
+}
+
+TRUE="1"
+FALSE="0"
+
+# 输出错误 白字红底 内容前加日期时间
+# ${1} : 输出内容
+# ${2} : 是否输出到文件
+# ${3} : 日志文件路径
+function errorLog() {
+    date=$(date +%F%n%T)
+    data="[${date}] ERROR : ${1}"
+    echoContentWithAssginColor "${data}" $WHITE $RED $DEFAULT_MODE
+    
+    if [ "${2}" = "${TRUE}" ]; then
+        contentWriteToFileOnCreate "${3}" "${data}"
+    fi
+}
+
+# 输出信息 白字蓝底 添加日期时间
+# ${1} : 输出内容
+# ${2} : 是否输出到文件
+# ${3} : 日志文件路径
+function infoLog() {
+    date=$(date +%F%n%T)
+    data="[${date}] INFO : ${1}"
+    echoContentWithAssginColor "${data}" $WHITE $CYAN_BLUE $DEFAULT_MODE
+    if [ "${2}" = "${TRUE}" ]; then
+        contentWriteToFileOnCreate "${3}" "${data}"
+    fi
 }
