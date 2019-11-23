@@ -5,7 +5,7 @@
 # Remarks     : 安装 vscode
 
 # import
-source ./common/file.sh
+source ./common/common.sh
 
 # 下载地址
 DLOAD_URL=https://update.code.visualstudio.com/latest/linux-x64/stable
