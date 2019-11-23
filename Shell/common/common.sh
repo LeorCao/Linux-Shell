@@ -1,5 +1,7 @@
 #!/bin/bash
 
+DESKTOP_DIR="/usr/share/applications/"
+
 # 检查错误，如果有错误则打印错误信息，退出执行
 # ${1} : 需要判断的信息
 # ${2} : 错误时需要输出的错误原因
@@ -46,10 +48,10 @@ function getAssignPrefixChildDir() {
 # ${1} : 下载地址
 # ${2} : 文件名称(可选)
 function downloadFile() {
-    DloadGloandUrl=${1}
-    DloadSaveName=${DloadGloandUrl##*/}
+    local DloadGloandUrl=${1}
+    local DloadSaveName=${DloadGloandUrl##*/}
     if [ ! -z ${2} ]; then
-        DloadSaveName=${2}
+        local DloadSaveName=${2}
     fi
     readonly DloadGloandUrl
     readonly DloadSaveName
@@ -63,24 +65,41 @@ function downloadFile() {
 # ${3} : 快捷方式对应的启动文件
 # ${4} : 快捷方式图标对应的图片
 function creationDesktop() {
-    desktop="${1}.desktop"
-    deskName=${2}
-    optPath=${3}
-    pngPath=${4}
-    desktop="/usr/share/applications/${desktop}"
+    local desktop="${1}"
+    local deskName=${2}
+    local optPath=${3}
+    local pngPath=${4}
+    local desktop="${DESKTOP_DIR}${desktop}"
 
     forceCreateAndWriteContToFile ${desktop} '[Desktop Entry]\nName='${deskName}'\nExec='${optPath}'\nIcon='${pngPath}'\nTerminal=false\nType=Application\nEncoding=UTF-8\nCategories=Development'\n
-
-    sudo chmod 755 "${optPath}"
-
-    sudo chmod 644 "${desktop}"
 
     echo "desktop creation success"
 }
 
+# 删除快捷方式
+# ${1} : 快捷方式名称
+function deleteDesktop() {
+    local desktop_full_name="${DESKTOP_DIR}${1}"
+    if [ -e "${desktop_full_name}" ]; then
+        sudo rm -f ${desktop_full_name}
+    fi
+}
+
+# 删除文件夹
+# ${1} : 需要删除的文件夹
+function deleteDir() {
+    sudo rm -rf ${1}
+}
+
+# 输出快捷方式全路径
+# ${1} : 快捷方式名称
+function returnDesktopPath() {
+    echo "/usr/share/applications/${1}"
+}
+
 # manjaro 判断 程序是否已安装
 function isProcedureExist() {
-    proName=$(pacman -Q ${1})
+    local proName=$(pacman -Q ${1})
     isEmpty "${proName}"
     echo $?
 }
@@ -90,18 +109,18 @@ function isProcedureExist() {
 # ${2} 需要写入的内容
 # ${3} 在PATH中添加的内容
 function editSystemPATH() {
-    ProPath="${HOME}/.xprofile"
+    local ProPath="${HOME}/.xprofile"
     # ProPath="${HOME}/Developments/ManjaroConfigrue/Shell/test-sed"
     # 判断需要配置的配置项是否存在
-    path=$(sudo sed -n "/^PATH=.*$/p" ${ProPath})
+    local path=$(sudo sed -n "/^PATH=.*$/p" ${ProPath})
     isEmpty "${path}"
     if [ $? == 0 ]; then
         # 不存在则添加配置项，同时添加PATH项
-        path="PATH=\$PATH"
+        local path="PATH=\$PATH"
         sudo echo "" >> $ProPath
         sudo sed -i "\$a ${path}" ${ProPath}
     fi
-    string=$(sudo sed -n "/${1}/p" ${ProPath})
+    local string=$(sudo sed -n "/${1}/p" ${ProPath})
     isEmpty "${string}"
     if [ $? == 0 ]; then
         # 不存在则在PATH前面添加配置项
@@ -145,7 +164,7 @@ function contentWriteToFileOnCreate() {
 # ${3} : 替换的内容
 function editReplaceFileByLine() {
     # 搜寻获取行号
-    lineNum=`sed -n "/${2}/=" ${1}`
+    local lineNum=`sed -n "/${2}/=" ${1}`
     # 替换内容
     sudo sed -i "${lineNum}c ${3} " ${1}
 }
@@ -163,8 +182,6 @@ function isEmpty() {
     fi
     return 1
 }
-
-
 
 # 输出指定颜色的内容
 
@@ -253,7 +270,7 @@ INVISIBLE="8"
 # ${4} : 显示方式
 # CALL e.g : echoContentWithAssginColor "content" "front color" "backgured color" "shwo mode"
 function echoContentWithAssginColor() {
-    export ret="\\033["
+    local ret="\\033["
     if [ "${4}" != "${DEFAULT_MODE}" ]; then
         ret=${ret}${4}";"
     fi
@@ -327,8 +344,8 @@ FALSE="0"
 # ${2} : 是否输出到文件
 # ${3} : 日志文件路径
 function errorLog() {
-    date=$(date +%F%n%T)
-    data="[${date}] ERROR : ${1}"
+    local date=$(date +%F%n%T)
+    local data="[${date}] ERROR : ${1}"
     echoContentWithAssginColor "${data}" $WHITE $RED $DEFAULT_MODE
     
     if [ "${2}" = "${TRUE}" ]; then
@@ -341,8 +358,8 @@ function errorLog() {
 # ${2} : 是否输出到文件
 # ${3} : 日志文件路径
 function infoLog() {
-    date=$(date +%F%n%T)
-    data="[${date}] INFO : ${1}"
+    local date=$(date +%F%n%T)
+    local data="[${date}] INFO : ${1}"
     echoContentWithAssginColor "${data}" $WHITE $CYAN_BLUE $DEFAULT_MODE
     if [ "${2}" = "${TRUE}" ]; then
         contentWriteToFileOnCreate "${3}" "${data}"
