@@ -64,14 +64,16 @@ function downloadFile() {
 # ${2} : 快捷方式名称
 # ${3} : 快捷方式对应的启动文件
 # ${4} : 快捷方式图标对应的图片
+# ${5} : 启动分类
 function creationDesktop() {
     local desktop="${1}"
     local deskName=${2}
     local optPath=${3}
     local pngPath=${4}
     local desktop="${DESKTOP_DIR}${desktop}"
+    local class="${5}"
 
-    forceCreateAndWriteContToFile ${desktop} '[Desktop Entry]\nName='${deskName}'\nExec='${optPath}'\nIcon='${pngPath}'\nTerminal=false\nType=Application\nEncoding=UTF-8\nCategories=Development'\n
+    forceCreateAndWriteContToFile ${desktop} "[Desktop Entry]\nName=${deskName}\nExec=${optPath}\nIcon=${pngPath}\nTerminal=false\nType=Application\nEncoding=UTF-8\nCategories=Development\nStartupWMClass=${class}"
 
     echo "desktop creation success"
 }

@@ -21,6 +21,6 @@ curl -L $DLOAD_URL | sudo tar -xzf - -C $DECOM_PATH || {printErrorEndMsg "Downlo
 deleteDesktop "${DESKTOP_NAME}"
 
 # 创建快捷方式
-creationDesktop "${DESKTOP_NAME}" "Postman" "${EXEC_PATH}" "${DESKTOP_ICON}"
+creationDesktop "${DESKTOP_NAME}" "Postman" "${EXEC_PATH}" "${DESKTOP_ICON}" "postman"
 
 printEndMsg

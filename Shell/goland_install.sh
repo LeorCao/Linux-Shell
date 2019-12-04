@@ -25,7 +25,7 @@ DloadSaveName=$(downloadFile "${DloadGloandUrl}")
 sudo tar -xzvf ${DloadSaveName} -C /opt/
 
 # Creation desktop
-creationDesktop "goland" "Goland IDEA" "${GolandChildDir}/bin/goland.sh" "${GolandChildDir}/bin/goland.png"
+creationDesktop "goland" "Goland IDEA" "${GolandChildDir}/bin/goland.sh" "${GolandChildDir}/bin/goland.png" "goland"
 
 # Running exec shell
 $GolandChildDir/bin/goland.sh

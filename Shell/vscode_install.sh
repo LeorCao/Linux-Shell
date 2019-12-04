@@ -31,7 +31,7 @@ DESKTOP_FULL_PATH=$?
 
 # 创建快捷方式
 if [ ! -e ${DESKTOP_FULL_PATH} ]; then
-    creationDesktop "${DESKTOP_NAME}" "Vscode" "${EXEC_PATH}" "${DESKTOP_ICON}"
+    creationDesktop "${DESKTOP_NAME}" "Vscode" "${EXEC_PATH}" "${DESKTOP_ICON}" "vscode"
 fi
 
 exit
