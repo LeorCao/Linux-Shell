@@ -7,29 +7,41 @@ source ./common/common.sh
 # Create date : 2019-07-06 15:23
 # Remarks     : Installing Goland IDE
 
+# configuration definition
+# installing version
 VER=2019.2.4
 
-# configuration definition
-SAVE_NAME="ideaIU-${VER}.tar.gz"
-DLOAD_URL="https://download.jetbrains.com/idea/${SAVE_NAME}?_ga=2.152292601.1509137156.1575423809-1907418422.1575255272"
-SAVE_PATH=/opt/
-FULL_PATH="${SAVE_PATH}ideaIU-${VER}"
+DLOAD_NAME="ideaIU-${VER}"
+DLOAD_URL="https://download.jetbrains.com/idea/${DLOAD_NAME}.tar.gz"
+SAVE_PATH="/opt/${DLOAD_NAME}"
+BIN_PATH="${SAVE_PATH}/bin/"
 
-if [ ! -e ~/Downloads ]; then
-    mkdir ~/Downloads
+pwd
+AGENT_PATH="${?}/asset/jetbrains-agent.jar"
+
+printPrefaceMsg
+
+if [ -e ${SAVE_PATH} ]; then
+    sudo rm -rf ${SAVE_PATH}
+    checkError "${?}" "Delete old save path failed!"
 fi
 
-cd ~/Downloads
+sudo mkdir -p ${SAVE_PATH}
 
-# Download Goland
-curl -L ${DLOAD_URL} | tar -xzf - -C ${SAVE_PATH}
+# Download idea
+infoLog "Download URL : ${DLOAD_URL}"
+curl -L ${DLOAD_URL} | tar -xzf - -C ${SAVE_PATH} --strip-components=1
 if [ ${?} = "0" ]; then
-    echo "Download success!"
+    infoLog "Download idea success!"
 else
     errorLog "Downlaod idea failed!"
     exits
 fi
 
-"${FULL_PATH}/bin/idea.sh"
+editWriteFile "${BIN_PATH}idea64.vmoptions" "-javaagent:${BIN_PATH}jetbrains-agent.jar"
+
+"${BIN_PATH}/idea.sh"
+
+printEndMsg
 
 exit

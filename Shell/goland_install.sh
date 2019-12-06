@@ -8,26 +8,55 @@ source ./common/common.sh
 # Remarks     : Installing Goland IDE
 
 # configuration definition
-DloadGloandUrl=https://download.jetbrains.8686c.com/go/goland-2019.2.5.tar.gz
-DloadSaveName=${DloadGloandUrl##*/}
-GolandChildDir=/opt/GoLand-2019.2.5
+# Installing version
+VER="2019.2.5"
 
-if [ ! -e ~/Downloads ]; then
-    mkdir ~/Downloads
+DLOAD_NAME="goland-${VER}"
+DLOAD_URL="https://download.jetbrains.8686c.com/go/${DLOAD_NAME}.tar.gz"
+SAVE_PATH="/opt/${DLOAD_NAME}"
+DESKTOP="goland.desktop"
+DESKTOP_CLASS="goland"
+BIN_PATH="${SAVE_PATH}/bin/"
+EXEC_PATH="${BIN_PATH}goland.sh"
+ICON_PATH="${BIN_PATH}goland.svg"
+
+pwd
+AGENT_PATH="${?}/asset/jetbrains-agent.jar"
+
+# print preface message
+printPrefaceMsg
+
+# Check old path is existence
+if [ -e "${SAVE_PATH}" ]; then
+    sudo rm -rf "${SAVE_PATH}"
+    checkError "${?}" "Delete old save path is failed!"
 fi
 
-cd ~/Downloads
+# Recreate save path
+sudo mkdir -p ${SAVE_PATH}
 
 # Download Goland
-DloadSaveName=$(downloadFile "${DloadGloandUrl}")
+infoLog "Download URL : ${DLOAD_URL}"
+curl -L ${DLOAD_URL} | sudo tar -xzvf - -C ${SAVE_PATH} --strip-components=1
+if [ "${?}" = "0" ]; then
+    infoLog "Download goland success!"
+else
+    errorLog "Download goland failed!"
+    exit
+fi
 
-# Decompression Goland
-sudo tar -xzvf ${DloadSaveName} -C /opt/
+sudo cp ${AGENT_PATH} ${BIN_PATH}
+
+# Delete old desktop
+deleteDesktop "${DESKTOP_NAME}"
 
 # Creation desktop
-creationDesktop "goland" "Goland IDEA" "${GolandChildDir}/bin/goland.sh" "${GolandChildDir}/bin/goland.png" "goland"
+creationDesktop "${DESKTOP_NAME}" "Goland IDEA" "${EXEC_PATH}" "${ICON_PATH}" "${DESKTOP_CLASS}"
 
-# Running exec shell
-$GolandChildDir/bin/goland.sh
+# wiret config to vmoptions
+editWriteFile "${BIN_PATH}goland64.vmoptions" "-javaagent:${BIN_PATH}jetbrains-agent.jar"
+
+# print end message
+printEndMsg
 
 exit
