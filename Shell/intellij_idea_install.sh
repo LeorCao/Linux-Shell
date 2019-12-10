@@ -16,8 +16,8 @@ DLOAD_URL="https://download.jetbrains.com/idea/${DLOAD_NAME}.tar.gz"
 SAVE_PATH="/opt/${DLOAD_NAME}"
 BIN_PATH="${SAVE_PATH}/bin/"
 
-pwd
-AGENT_PATH="${?}/asset/jetbrains-agent.jar"
+CURR_PATH=`pwd`
+AGENT_PATH="${CURR_PATH}/asset/jetbrains-agent.jar"
 
 printPrefaceMsg
 
@@ -37,6 +37,8 @@ else
     errorLog "Downlaod idea failed!"
     exit
 fi
+
+sudo cp ${AGENT_PATH} ${BIN_PATH}
 
 editWriteFile "${BIN_PATH}idea64.vmoptions" "-javaagent:${BIN_PATH}jetbrains-agent.jar"
 

@@ -14,14 +14,14 @@ VER="2019.2.5"
 DLOAD_NAME="goland-${VER}"
 DLOAD_URL="https://download.jetbrains.8686c.com/go/${DLOAD_NAME}.tar.gz"
 SAVE_PATH="/opt/${DLOAD_NAME}"
-DESKTOP="goland.desktop"
+DESKTOP_NAME="goland.desktop"
 DESKTOP_CLASS="goland"
 BIN_PATH="${SAVE_PATH}/bin/"
 EXEC_PATH="${BIN_PATH}goland.sh"
 ICON_PATH="${BIN_PATH}goland.svg"
 
-pwd
-AGENT_PATH="${?}/asset/jetbrains-agent.jar"
+CURR_PATH=`pwd`
+AGENT_PATH="${CURR_PATH}/asset/jetbrains-agent.jar"
 
 # print preface message
 printPrefaceMsg
@@ -37,7 +37,7 @@ sudo mkdir -p ${SAVE_PATH}
 
 # Download Goland
 infoLog "Download URL : ${DLOAD_URL}"
-curl -L ${DLOAD_URL} | sudo tar -xzvf - -C ${SAVE_PATH} --strip-components=1
+curl -L ${DLOAD_URL} | sudo tar -xzf - -C ${SAVE_PATH} --strip-components=1
 if [ "${?}" = "0" ]; then
     infoLog "Download goland success!"
 else
