@@ -30,12 +30,12 @@ sudo mkdir -p ${SAVE_PATH}
 
 # Download idea
 infoLog "Download URL : ${DLOAD_URL}"
-curl -L ${DLOAD_URL} | tar -xzf - -C ${SAVE_PATH} --strip-components=1
+curl -L ${DLOAD_URL} | sudo tar -xzf - -C ${SAVE_PATH} --strip-components=1
 if [ ${?} = "0" ]; then
     infoLog "Download idea success!"
 else
     errorLog "Downlaod idea failed!"
-    exits
+    exit
 fi
 
 editWriteFile "${BIN_PATH}idea64.vmoptions" "-javaagent:${BIN_PATH}jetbrains-agent.jar"
