@@ -9,10 +9,11 @@ source ./common/common.sh
 printPrefaceMsg
 
 # 需要安装的 node 版本
-NODE_VER=v12.13.0
+NODE_VER=v12.13.1
 
 BASE_URL=https://npm.taobao.org/mirrors/node
 FILE_NAME=node-${NODE_VER}-linux-x64
+DL_URL="${BASE_URL}/${NODE_VER}/${FILE_NAME}.tar.xz"
 SAVE_PATH=~/Dev/Nodejs/
 
 # 清除旧文件
@@ -27,7 +28,7 @@ echo "Download URL:"${BASE_URL}/${NODE_VER}/${FILE_NAME}.tar.xz
 echo --------------------------------
 
 # 下载 nodejs
-curl -L ${BASE_URL}/${NODE_VER}/${FILE_NAME}.tar.xz | tar -xJf - -C ${SAVE_PATH}
+curl -L ${DL_URL} | tar -xJf - -C ${SAVE_PATH}
 
 checkError $? "Download failed!"
 
