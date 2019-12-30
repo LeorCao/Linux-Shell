@@ -22,7 +22,7 @@ if [ ! -e ${SAVE_PATH} ]; then
     sudo mkdir ${SAVE_PATH}
 fi
 
-# 下载文件并解压到基础路径，且去除一层文件夹
+# 下载文件并解压到基础路径，且去除外层文件夹
 sudo curl -L ${DLOAD_URL} | sudo tar -xzf - -C ${SAVE_PATH} --strip-components=1
 
 # 获取快捷方式全路径
