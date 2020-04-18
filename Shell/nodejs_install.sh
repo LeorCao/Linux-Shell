@@ -9,7 +9,7 @@ source ./common/common.sh
 printPrefaceMsg
 
 # 需要安装的 node 版本
-NODE_VER=v12.13.1
+NODE_VER=v12.16.1
 
 BASE_URL=https://npm.taobao.org/mirrors/node
 FILE_NAME=node-${NODE_VER}-linux-x64
@@ -33,6 +33,8 @@ curl -L ${DL_URL} | tar -xJf - -C ${SAVE_PATH}
 checkError $? "Download failed!"
 
 # 添加软链接
+sudo rm -f /usr/bin/node /usr/bin/npm
+
 sudo ln -s ${SAVE_PATH}${FILE_NAME}/bin/node /usr/bin/node
 sudo ln -s ${SAVE_PATH}${FILE_NAME}/bin/npm /usr/bin/npm
 
